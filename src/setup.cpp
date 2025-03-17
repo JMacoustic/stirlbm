@@ -83,7 +83,7 @@ void main_setup() { // automatic data generator.
 	const uint N = 150u;
 	const uint3 lbm_grid = uint3(N, N, N); // Simulation spatial resolution
 	const ulong lbm_dt = 1ull; // Simulation time resolution
-	const ulong lbm_T =7000ull;
+	const ulong lbm_T =3000ull;
 	const ulong lbm_init = 2000ull;
 	const float lbm_radius = (float)N * fan_ratio / 2.0f;
 	const float lbm_u = lbm_radius * si_omega / fps; // lbm_u = (displacement in grids) / (time variance in # of dt steps)
@@ -140,7 +140,7 @@ void main_setup() { // automatic data generator.
 		std::filesystem::create_directories(export_path);
 		exportConfig(selected, rpm, "txt", export_path);
 
-		if (lbm.graphics.next_frame(lbm_T-lbm_init, 10.0f, 10u) && lbm_init < lbm.get_t() && lbm.get_t() < lbm_T) {
+		if (lbm.graphics.next_frame(lbm_T-lbm_init, 1.0f, 10u) && lbm_init < lbm.get_t() && lbm.get_t() < lbm_T) {
 			lbm.graphics.set_camera_free(float3(0.0f * (float)Nx, 0.0f * (float)Ny, 0.5f * (float)Nz), 0.0f, 90.0f, 80.0f);
 			lbm.graphics.write_frame(export_path);
 		}
