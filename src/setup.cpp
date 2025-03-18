@@ -126,7 +126,9 @@ void main_setup() { // automatic data generator.
 	int folder_num = repeats+1;
 	std::string folder_str = std::to_string(folder_num);
 	while (folder_str.length() < 4) folder_str = "0" + folder_str;
-	const string export_path = get_exe_path() + "../export/data_" + folder_str + "/";
+	const string image_path = get_exe_path() + "../export/data_" + folder_str + "/";
+	const string config_path = get_exe_path() + "../export/parameters/";
+	const string video_path = get_exe_path() + "../export/videos/";
 	num_data = 70; // how many random materials we will export
 
 	// Initialize simulation
@@ -140,12 +142,14 @@ void main_setup() { // automatic data generator.
 		lbm.run(lbm_dt, lbm_T);
 
 #if defined(GRAPHICS) && !defined(INTERACTIVE_GRAPHICS)
-		std::filesystem::create_directories(export_path);
-		exportConfig(selected, rpm, "json", export_path);
+		std::filesystem::create_directories(image_path);
+		std::filesystem::create_directories(config_path);
+		std::filesystem::create_directories(video_path);
+		exportConfig(selected, rpm, "json", config_path, folder_str);
 
 		if (lbm.graphics.next_frame(lbm_T-lbm_init, 10.0f, 10u) && lbm_init < lbm.get_t() && lbm.get_t() < lbm_T) {
 			lbm.graphics.set_camera_free(float3(0.0f * (float)Nx, 0.0f * (float)Ny, 0.5f * (float)Nz), 0.0f, 90.0f, 80.0f);
-			lbm.graphics.write_frame(export_path);
+			lbm.graphics.write_frame(image_path);
 		}
 #endif // GRAPHICS && !INTERACTIVE_GRAPHICS
 	}
