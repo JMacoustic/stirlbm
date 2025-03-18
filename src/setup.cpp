@@ -129,7 +129,7 @@ void main_setup() { // automatic data generator.
 	const string image_path = get_exe_path() + "../export/data_" + folder_str + "/";
 	const string config_path = get_exe_path() + "../export/parameters/";
 	const string video_path = get_exe_path() + "../export/videos/";
-	num_data = 70; // how many random materials we will export
+	num_data = 500; // how many random materials we will export
 
 	// Initialize simulation
 	lbm.graphics.visualization_modes = VIS_PHI_RAYTRACE;
