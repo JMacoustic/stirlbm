@@ -123,8 +123,11 @@ void main_setup() { // automatic data generator.
 	// ####################################################################### run simulation, export images and data ##########################################################################
 	
 	// export settings
-	const string export_path = get_exe_path() + "../export/data_" + std::to_string(repeats+1) + "/";
-	num_data = 100; // how many random materials we will export
+	int folder_num = repeats+1;
+	std::string folder_str = std::to_string(folder_num);
+	while (folder_str.length() < 4) folder_str = "0" + folder_str;
+	const string export_path = get_exe_path() + "../export/data_" + folder_str + "/";
+	num_data = 70; // how many random materials we will export
 
 	// Initialize simulation
 	lbm.graphics.visualization_modes = VIS_PHI_RAYTRACE;
