@@ -45,7 +45,7 @@ Material selectMaterial(const std::vector<Material>& materials, const std::strin
 
 using json = nlohmann::json;
 
-void exportConfig(const Material& material, const int& rpm, const std::string& option, const std::string& exportpath) {
+void exportConfig(const Material& material, const int& rpm, const std::string& option, const std::string& exportpath, const std::string& repeat) {
     /*
     * export options: json, txt, csv
     */
@@ -57,7 +57,7 @@ void exportConfig(const Material& material, const int& rpm, const std::string& o
         config["kinematic_viscosity"] = material.kinematic_viscosity;
         config["RPM"] = rpm;
 
-        std::ofstream configuration(exportpath + "config.json");
+        std::ofstream configuration(exportpath + "config_"+ repeat + ".json");
         if (configuration.is_open()) {
             configuration << config.dump(4); // Pretty-print JSON with 4-space indentation
             configuration.close();
@@ -67,7 +67,7 @@ void exportConfig(const Material& material, const int& rpm, const std::string& o
         }
     }
     else if (option == "txt") {
-        std::ofstream configuration(exportpath + "config.txt");
+        std::ofstream configuration(exportpath + "config_" + repeat + ".txt");
         if (configuration.is_open()) {
             configuration << "density: " << material.density << "\n";
             configuration << "surface_tension: " << material.surface_tension << "\n";
@@ -79,7 +79,7 @@ void exportConfig(const Material& material, const int& rpm, const std::string& o
         else std::cerr << "oops..something went wrong while exporting configuration\n";
     }
     else if (option == "csv") {
-        std::ofstream configuration(exportpath + "config.csv");
+        std::ofstream configuration(exportpath + "config_" + repeat + ".csv");
         if (configuration.is_open()) {
             configuration << "density," << material.density << "\n";
             configuration << "surface_tension," << material.surface_tension << "\n";
