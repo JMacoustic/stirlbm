@@ -14,7 +14,7 @@ struct Material {
 
 std::vector<Material> readCSV(const std::string& filename);
 Material selectMaterial(const std::vector<Material>& materials, const std::string& name);
-void exportConfig(const Material& material, const int& rpm, const std::string& option, const std::string& exportpath);
-void exportVideo(const std::string& exportpath); // this function is still on develpment
+void exportConfig(const Material& material, const int& rpm, const std::string& option, const std::string& exportpath, const std::string& repeat);
+//void exportVideo(const std::string& exportpath); // this function is still on develpment
 
 #endif // FLUIDDATA_HPP
