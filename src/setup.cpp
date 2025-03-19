@@ -39,7 +39,8 @@ void main_setup() { // benchmark; required extensions in defines.hpp: BENCHMARK,
 } /**/
 #endif // BENCHMARK
 
-void main_setup() { // automatic data generator. 
+#ifdef STIR_MODE
+void main_setup() { // without decay
 	std::string filename = "property/properties.csv";
 	std::vector<Material> materials = readCSV(filename);
 
@@ -53,7 +54,7 @@ void main_setup() { // automatic data generator.
 	std::mt19937 gen(rd());
 	std::uniform_int_distribution<int> dist(0, materials.size() - 1);
 	Material selected = materials[dist(gen)];
-	std::uniform_int_distribution<int> dist2(5, 10);
+	std::uniform_int_distribution<int> dist2(RPM_RANGE);
 	const float rpm = dist2(gen);
 
 	// print result
@@ -68,7 +69,7 @@ void main_setup() { // automatic data generator.
 	// si values
 	const float si_box = 1.0f;
 	const float fan_ratio = 0.4f;
-	const float si_omega = rpm * 2.0f*3.14f;
+	const float si_omega = rpm * 2.0f * 3.14f;
 	const float si_radius = si_box * fan_ratio / 2.0f; // rotor size
 	const float si_u = si_radius * si_omega;
 	const float si_rho = selected.density;
@@ -78,12 +79,13 @@ void main_setup() { // automatic data generator.
 	const bool enable_cylinder = true;
 
 	// lbm reference values
-	const uint fps = 3000u;
-	const uint N = 150u;
+	const uint fps = FPS;
+	const uint N = GRID;
 	const uint3 lbm_grid = uint3(N, N, N); // Simulation spatial resolution
 	const ulong lbm_dt = 1ull; // Simulation time resolution
-	const ulong lbm_T = 7000ull;
-	const ulong lbm_init = 2000ull;
+	const ulong lbm_stop = STOP_CAPTURE;
+	const ulong lbm_init = START_CAPTURE;
+	const ulong lbm_decay = STOP_ROTOR;
 	const float lbm_radius = (float)N * fan_ratio / 2.0f;
 	const float lbm_u = lbm_radius * si_omega / fps; // lbm_u = (displacement in grids) / (time variance in # of dt steps)
 	const float lbm_rho = 1.0f;	// should be set to 1.0 according to developers
@@ -109,44 +111,171 @@ void main_setup() { // automatic data generator.
 
 		if (z < h) {
 			lbm.flags[n] = TYPE_F;
-			lbm.rho[n] = units.rho_hydrostatic(lbm_f, (float)z, h);}
+			lbm.rho[n] = units.rho_hydrostatic(lbm_f, (float)z, h);
+		}
 
 		if (enable_cylinder == true) {
 			if (cylinder(x, y, z, center, float3(0.0f, 0.0f, 300.0f), lbm.get_Nx() / 2u) == 0 && z < Nz - 1u) {
-				lbm.flags[n] = TYPE_S;}
+				lbm.flags[n] = TYPE_S;
+			}
 		}
 
 		if (x == 0u || x == Nx - 1u || y == 0u || y == Ny - 1u || z == 0u)lbm.flags[n] = TYPE_S;
-	});
-	
+		});
+
 	// ####################################################################### run simulation, export images and data ##########################################################################
 #if defined(GRAPHICS) && !defined(INTERACTIVE_GRAPHICS)
 	// export settings
-	int folder_num = repeats+1;
+	int folder_num = repeats + 1;
 	std::string folder_str = std::to_string(folder_num);
 	while (folder_str.length() < 4) folder_str = "0" + folder_str;
 	const string image_path = get_exe_path() + "../export/data_" + folder_str + "/";
 	const string config_path = get_exe_path() + "../export/parameters/";
 	const string video_path = get_exe_path() + "../export/videos/";
-	num_data = 70; // how many random materials we will export
+	num_data = NUM_DATA; // how many random materials we will export
 #endif
 	// Initialize simulation
-	lbm.graphics.visualization_modes = VIS_PHI_RAYTRACE;
-	lbm.run(0u, lbm_T);
+	lbm.graphics.visualization_modes = VIS_FLAG_LATTICE;
+	lbm.run(0u, lbm_stop);
 
 	// simulation loop
-	while (lbm.get_t() < lbm_T) {
+	while (lbm.get_t() < lbm_stop) {
 		lbm.voxelize_mesh_on_device(mesh, TYPE_S | TYPE_X, center, float3(0.0f), float3(0.0f, 0.0f, lbm_omega));
 		mesh->rotate(float3x3(float3(0.0f, 0.0f, 1.0f), lbm_domega));
-		lbm.run(lbm_dt, lbm_T);
+		lbm.run(lbm_dt, lbm_stop);
 
 #if defined(GRAPHICS) && !defined(INTERACTIVE_GRAPHICS)
 		std::filesystem::create_directories(image_path);
 		std::filesystem::create_directories(config_path);
 		std::filesystem::create_directories(video_path);
-		exportConfig(selected, rpm, "json", config_path, folder_str);
+		exportConfig(selected, rpm, CONFIG_OPTION, config_path, folder_str);
 
-		if (lbm.graphics.next_frame(lbm_T-lbm_init, 10.0f, 10u) && lbm_init < lbm.get_t() && lbm.get_t() < lbm_T) {
+		if (lbm.graphics.next_frame(lbm_stop-lbm_init, 10.0f, 10u) && lbm_init < lbm.get_t() && lbm.get_t() < lbm_stop) {
+			lbm.graphics.set_camera_free(float3(0.0f * (float)Nx, 0.0f * (float)Ny, 0.5f * (float)Nz), 0.0f, 90.0f, 80.0f);
+			lbm.graphics.write_frame(image_path);
+		}
+#endif // GRAPHICS && !INTERACTIVE_GRAPHICS
+	}
+	// exportVideo(export_path)  //this function is still on develpment
+}
+#endif // STIR_MODE
+
+
+
+#ifdef DECAY_MODE
+void main_setup() { // decay: stir and stop
+	std::string filename = "property/properties.csv";
+	std::vector<Material> materials = readCSV(filename);
+
+	if (materials.empty()) {
+		std::cerr << "No data found!" << std::endl;
+		return;
+	}
+
+	// random selection
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<int> dist(0, materials.size() - 1);
+	Material selected = materials[dist(gen)];
+	std::uniform_int_distribution<int> dist2(RPM_RANGE);
+	const float rpm = dist2(gen);
+
+	// print result
+	std::cout << "\nSelected Material Properties:\n";
+	std::cout << "Name: " << selected.name << "\n";
+	std::cout << "Density: " << selected.density << " kg/m^3\n";
+	std::cout << "Surface Tension: " << selected.surface_tension << " N/m\n";
+	std::cout << "Dynamic Viscosity: " << selected.dynamic_viscosity << " Pa*s\n";
+	std::cout << "Kinematic Viscosity: " << selected.kinematic_viscosity << " m^2/s\n";
+	std::cout << "RPM: " << rpm << " rad/s\n";
+
+	// si values
+	const float si_box = 1.0f;
+	const float fan_ratio = 0.4f;
+	const float si_omega = rpm * 2.0f * 3.14f;
+	const float si_radius = si_box * fan_ratio / 2.0f; // rotor size
+	const float si_u = si_radius * si_omega;
+	const float si_rho = selected.density;
+	const float si_nu = selected.kinematic_viscosity; // water: 0.000001
+	const float si_sigma = selected.surface_tension;
+	const float si_g = 9.8f;
+	const bool enable_cylinder = true;
+	
+	// lbm reference values
+	const uint fps = FPS;
+	const uint N = GRID;
+	const uint3 lbm_grid = uint3(N, N, N); // Simulation spatial resolution
+	const ulong lbm_dt = 1ull; // Simulation time resolution
+	const ulong lbm_stop = STOP_CAPTURE;
+	const ulong lbm_init = START_CAPTURE;
+	const ulong lbm_decay = STOP_ROTOR;
+	const float lbm_radius = (float)N * fan_ratio / 2.0f;
+	const float lbm_u = lbm_radius * si_omega / fps; // lbm_u = (displacement in grids) / (time variance in # of dt steps)
+	const float lbm_rho = 1.0f;	// should be set to 1.0 according to developers
+
+	units.set_m_kg_s(lbm_radius, lbm_u, lbm_rho, si_radius, si_u, si_rho);
+
+	// lbm world parameters (lbm-unit)
+	const float lbm_nu = units.nu(si_nu);
+	const float lbm_sigma = units.sigma(si_sigma);
+	const float lbm_f = units.f(si_rho, si_g);
+	const float lbm_omega = units.omega(si_omega), lbm_domega = lbm_omega * lbm_dt;
+	LBM lbm(lbm_grid, lbm_nu, 0.0f, 0.0f, -lbm_f, lbm_sigma);
+	const float3 center = float3(lbm.center().x, lbm.center().y, 1.0f * lbm_radius);
+
+	// ###################################################################################### define geometry ######################################################################################
+	Mesh* mesh = read_stl(get_exe_path() + "../stl/fan.stl", lbm.size(), center, 2.0f * lbm_radius);
+	const uint Nx = lbm.get_Nx(), Ny = lbm.get_Ny(), Nz = lbm.get_Nz();
+
+	parallel_for(lbm.get_N(), [&](ulong n) {
+		uint x = 0u, y = 0u, z = 0u;
+		lbm.coordinates(n, x, y, z);
+		int h = Nz / 3u;
+
+		if (z < h) {
+			lbm.flags[n] = TYPE_F;
+			lbm.rho[n] = units.rho_hydrostatic(lbm_f, (float)z, h);
+		}
+
+		if (enable_cylinder == true) {
+			if (cylinder(x, y, z, center, float3(0.0f, 0.0f, 300.0f), lbm.get_Nx() / 2u) == 0 && z < Nz - 1u) {
+				lbm.flags[n] = TYPE_S;
+			}
+		}
+
+		if (x == 0u || x == Nx - 1u || y == 0u || y == Ny - 1u || z == 0u)lbm.flags[n] = TYPE_S;
+		});
+
+	// ####################################################################### run simulation, export images and data ##########################################################################
+#if defined(GRAPHICS) && !defined(INTERACTIVE_GRAPHICS)
+	// export settings
+	int folder_num = repeats + 1;
+	std::string folder_str = std::to_string(folder_num);
+	while (folder_str.length() < 4) folder_str = "0" + folder_str;
+	const string image_path = get_exe_path() + "../export/data_" + folder_str + "/";
+	const string config_path = get_exe_path() + "../export/parameters/";
+	const string video_path = get_exe_path() + "../export/videos/";
+	num_data = NUM_DATA; // how many random materials we will export
+#endif
+	// Initialize simulation
+	lbm.graphics.visualization_modes = VIS_FLAG_LATTICE;
+	lbm.run(0u, lbm_stop);
+
+	// simulation loop
+	while (lbm.get_t() < lbm_stop) {
+		if (lbm.get_t()<lbm_decay) {
+			lbm.voxelize_mesh_on_device(mesh, TYPE_S | TYPE_X, center, float3(0.0f), float3(0.0f, 0.0f, lbm_omega));
+			mesh->rotate(float3x3(float3(0.0f, 0.0f, 1.0f), lbm_domega));
+		}
+		lbm.run(lbm_dt, lbm_stop);
+
+#if defined(GRAPHICS) && !defined(INTERACTIVE_GRAPHICS)
+		std::filesystem::create_directories(image_path);
+		std::filesystem::create_directories(config_path);
+		std::filesystem::create_directories(video_path);
+		exportConfig(selected, rpm, CONFIG_OPTION, config_path, folder_str);
+
+		if (lbm.graphics.next_frame(lbm_stop - lbm_init, 10.0f, 10u) && lbm_init < lbm.get_t() && lbm.get_t() < lbm_stop) {
 			lbm.graphics.set_camera_free(float3(0.0f * (float)Nx, 0.0f * (float)Ny, 0.5f * (float)Nz), 0.0f, 90.0f, 80.0f);
 			lbm.graphics.write_frame(image_path);
 		}
@@ -154,4 +283,6 @@ void main_setup() { // automatic data generator.
 	}
 
 	// exportVideo(export_path)  //this function is still on develpment
-}/**/
+}
+
+#endif // DECAY_MODE

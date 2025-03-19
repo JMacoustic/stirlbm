@@ -24,9 +24,9 @@
 #define SUBGRID // enables Smagorinsky-Lilly subgrid turbulence LES model to keep simulations with very large Reynolds number stable
 //#define PARTICLES // enables particles with immersed-boundary method (for 2-way coupling also activate VOLUME_FORCE and FORCE_FIELD; only supported in single-GPU)
 
-//#define INTERACTIVE_GRAPHICS // enable interactive graphics; start/pause the simulation by pressing P; either Windows or Linux X11 desktop must be available; on Linux: change to "compile on Linux with X11" command in make.sh
+#define INTERACTIVE_GRAPHICS // enable interactive graphics; start/pause the simulation by pressing P; either Windows or Linux X11 desktop must be available; on Linux: change to "compile on Linux with X11" command in make.sh
 //#define INTERACTIVE_GRAPHICS_ASCII // enable interactive graphics in ASCII mode the console; start/pause the simulation by pressing P
-#define GRAPHICS // run FluidX3D in the console, but still enable graphics functionality for writing rendered frames to the hard drive
+//#define GRAPHICS // run FluidX3D in the console, but still enable graphics functionality for writing rendered frames to the hard drive
 
 #define GRAPHICS_FRAME_WIDTH 1024 // set frame width if only GRAPHICS is enabled
 #define GRAPHICS_FRAME_HEIGHT 1024 // set frame height if only GRAPHICS is enabled
@@ -43,7 +43,20 @@
 
 //#define GRAPHICS_TRANSPARENCY 0.7f // optional: comment/uncomment this line to disable/enable semi-transparent rendering (looks better but reduces framerate), number represents transparency (equal to 1-opacity) (default: 0.7f)
 
+// ############################################################################################################
+// variables defined for stirLBM
+#define NUM_DATA 500
+#define RPM_RANGE 5,10
+#define CONFIG_OPTION "json"
+#define START_CAPTURE 2000ull
+#define STOP_ROTOR 2000ull
+#define STOP_CAPTURE 7000ull
+#define FPS 3000u
+#define GRID 150u
 
+// choose stirring mode
+#define STIR_MODE
+//#define DECAY_MODE
 
 // #############################################################################################################
 
