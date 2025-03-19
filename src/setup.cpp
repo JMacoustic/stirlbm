@@ -135,7 +135,7 @@ void main_setup() { // without decay
 	num_data = NUM_DATA; // how many random materials we will export
 #endif
 	// Initialize simulation
-	lbm.graphics.visualization_modes = VIS_FLAG_LATTICE;
+	lbm.graphics.visualization_modes = VIS_PHI_RAYTRACE;
 	lbm.run(0u, lbm_stop);
 
 	// simulation loop
@@ -258,7 +258,7 @@ void main_setup() { // decay: stir and stop
 	num_data = NUM_DATA; // how many random materials we will export
 #endif
 	// Initialize simulation
-	lbm.graphics.visualization_modes = VIS_FLAG_LATTICE;
+	lbm.graphics.visualization_modes = VIS_PHI_RAYTRACE;
 	lbm.run(0u, lbm_stop);
 
 	// simulation loop
