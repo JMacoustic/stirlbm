@@ -53,7 +53,7 @@ void main_setup() { // automatic data generator.
 	std::mt19937 gen(rd());
 	std::uniform_int_distribution<int> dist(0, materials.size() - 1);
 	Material selected = materials[dist(gen)];
-	std::uniform_int_distribution<int> dist2(8, 12);
+	std::uniform_int_distribution<int> dist2(5, 10);
 	const float rpm = dist2(gen);
 
 	// print result
@@ -63,7 +63,7 @@ void main_setup() { // automatic data generator.
 	std::cout << "Surface Tension: " << selected.surface_tension << " N/m\n";
 	std::cout << "Dynamic Viscosity: " << selected.dynamic_viscosity << " Pa*s\n";
 	std::cout << "Kinematic Viscosity: " << selected.kinematic_viscosity << " m^2/s\n";
-	std::cout << "RPM " << rpm << " rad/s\n";
+	std::cout << "RPM: " << rpm << " rad/s\n";
 
 	// si values
 	const float si_box = 1.0f;
@@ -77,13 +77,12 @@ void main_setup() { // automatic data generator.
 	const float si_g = 9.8f;
 	const bool enable_cylinder = true;
 
-
 	// lbm reference values
 	const uint fps = 3000u;
 	const uint N = 150u;
 	const uint3 lbm_grid = uint3(N, N, N); // Simulation spatial resolution
 	const ulong lbm_dt = 1ull; // Simulation time resolution
-	const ulong lbm_T =7000ull;
+	const ulong lbm_T = 7000ull;
 	const ulong lbm_init = 2000ull;
 	const float lbm_radius = (float)N * fan_ratio / 2.0f;
 	const float lbm_u = lbm_radius * si_omega / fps; // lbm_u = (displacement in grids) / (time variance in # of dt steps)
@@ -119,9 +118,9 @@ void main_setup() { // automatic data generator.
 
 		if (x == 0u || x == Nx - 1u || y == 0u || y == Ny - 1u || z == 0u)lbm.flags[n] = TYPE_S;
 	});
-
-	// ####################################################################### run simulation, export images and data ##########################################################################
 	
+	// ####################################################################### run simulation, export images and data ##########################################################################
+#if defined(GRAPHICS) && !defined(INTERACTIVE_GRAPHICS)
 	// export settings
 	int folder_num = repeats+1;
 	std::string folder_str = std::to_string(folder_num);
@@ -129,8 +128,8 @@ void main_setup() { // automatic data generator.
 	const string image_path = get_exe_path() + "../export/data_" + folder_str + "/";
 	const string config_path = get_exe_path() + "../export/parameters/";
 	const string video_path = get_exe_path() + "../export/videos/";
-	num_data = 500; // how many random materials we will export
-
+	num_data = 70; // how many random materials we will export
+#endif
 	// Initialize simulation
 	lbm.graphics.visualization_modes = VIS_PHI_RAYTRACE;
 	lbm.run(0u, lbm_T);
