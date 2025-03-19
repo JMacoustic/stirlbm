@@ -1,4 +1,5 @@
-﻿Mercury,13630,0.4744,0.00153,1.12E-07
+name,density,surface_tension,dynamic_viscosity,kinematic_viscosity
+Mercury,13630,0.4744,0.00153,1.12E-07
 Bromine,3214,0.041,0.00094,2.92E-07
 Diethyl ether (ethoxyethane),708,0.0167,0.00022,3.11E-07
 Dichloromethane(DCM),1318,0.0278,0.00041,3.11E-07
