@@ -1,23 +1,34 @@
 # FluidX3D Vortex Generator
 
-## Turotrial (folders)
+## Folders
 - skybox: background images. you can put any image file you want
 - export: path for exporting videos and configuration
 - property: fluid property csv file
 - src: source codes
 - stl: 3d model of rotating fan
-- bin, temp: I don't know either
+- bin: executable files. Update when simulation runs
 
 ## Source Code Editing Tips
-1.  GUI mode VS Headless mode 
+1.  Open "src/defines.hpp"
 
-Go to defines.hpp and comment / uncomment INTERACTIVE_GRAPHICS or GRAPHICS to select Headless mode or to use GUI. Currently set as headless mode.
+2. Select  headless or GUI mode
 
-2. Simulation Setup
+    -  #define INTERACTIVE_GRAPHICS : GUI mode
 
-Go to setup.cpp to edit geometries(fan.stl or fan2.stl), randomizing settings(rd), amount of data to export(num_data), 
+    - #define GRAPHICS : Headless mode
 
-3. Additional Source Codes
+3. Select stir mode or decay mode
 
-Please keep in mind there are 2 files (fluiddata.cpp, fluiddata.hpp) and many other variables added to the original code.
-you should not use original make.sh code to execute this project.
+    - #define STIR_MODE : stir forever
+    - #define DECAY_MODE: stir until specified time (#define STOP_ROTOR)
+
+4. Set simulation/export parameters
+    
+    - #define NUM_DATA : How many videos to export
+    - #define RPM_RANGE : random range of rotor RPM
+    - #define CONFIG_OPTION : config file export option. "json", "csv", "txt" 3 types available
+    - #define START_CAPTURE : when to start image export
+    - #define STOP_ROTOR : when to stop rotor rotation
+    - #define STOP_CAPTURE : when to stop image export
+    - #define FPS : simulation FPS
+    - #define GRID : grid resolusion (one-side) 
