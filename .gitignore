@@ -1,4 +1,5 @@
 export/ 
 .vs/ 
-bin/ 
+bin/FluidX3D.exe
+bin/FluidX3D.pdb
 temp/ 
