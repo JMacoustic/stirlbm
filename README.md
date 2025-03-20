@@ -8,7 +8,7 @@
 - stl: 3d model of rotating fan
 - bin: executable files. Updates when simulation runs
 
-## Source Code Editing Tips
+## Simulation Setup
 1.  Open "src/defines.hpp"
 
 2. Select  headless or GUI mode
@@ -32,3 +32,14 @@
     - #define STOP_CAPTURE : when to stop image export
     - #define FPS : simulation FPS
     - #define GRID : grid resolusion (one-side of the cube)
+
+## Stack images to .mp4 video
+1. Install opencv
+   ```sh
+    pip install opencv-python
+You should be careful. Installing opencv with another opencv package already installed, can lead to version conflicts and is very difficult to resolve. 
+check with `pip list` and remove other opencv packages.
+
+2. run "writemp4.py"
+   ```sh
+    python writemp4.py
