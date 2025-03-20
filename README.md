@@ -1,4 +1,4 @@
-# FluidX3D Vortex Generator
+# StirLBM: Vortex Dataset Generator using FluidX3D
 
 ## Folders
 - skybox: background images. you can put any image file you want
@@ -6,14 +6,14 @@
 - property: fluid property csv file
 - src: source codes
 - stl: 3d model of rotating fan
-- bin: executable files. Update when simulation runs
+- bin: executable files. Updates when simulation runs
 
 ## Source Code Editing Tips
 1.  Open "src/defines.hpp"
 
 2. Select  headless or GUI mode
 
-    -  #define INTERACTIVE_GRAPHICS : GUI mode
+    - #define INTERACTIVE_GRAPHICS : GUI mode
 
     - #define GRAPHICS : Headless mode
 
@@ -31,4 +31,4 @@
     - #define STOP_ROTOR : when to stop rotor rotation
     - #define STOP_CAPTURE : when to stop image export
     - #define FPS : simulation FPS
-    - #define GRID : grid resolusion (one-side) 
+    - #define GRID : grid resolusion (one-side of the cube)
