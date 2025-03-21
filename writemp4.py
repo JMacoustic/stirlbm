@@ -17,6 +17,7 @@ for folder in data_folders:
         continue
 
     first_frame = cv2.imread(image_files[0])
+    first_frame = cv2.cvtColor(first_frame, cv2.COLOR_BGR2RGB)
     height, width, layers = first_frame.shape
 
     output_video_path = os.path.join("export/videos", f"{folder}.mp4")
@@ -28,6 +29,7 @@ for folder in data_folders:
 
     for img_path in image_files:
         frame = cv2.imread(img_path)
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         if frame is None:
             print(f"Skipping corrupted image: {img_path}")
             continue
