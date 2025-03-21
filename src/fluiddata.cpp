@@ -93,6 +93,21 @@ void exportConfig(const Material& material, const int& rpm, const std::string& o
     else std::cerr << "invalid export filetype";
 }
 
+std::string skipFoldername(const std::string& base_path, const std::string& prefix, int start_num){
+    int folder_num = start_num;
+    while (true) {
+        std::string folder_str = std::to_string(folder_num);
+        while (folder_str.length() < 4) folder_str = "0" + folder_str;
+        std::string folder_path = base_path + prefix + folder_str + "/";
+
+        if (!fs::exists(folder_path)) {
+            return folder_path;  // Return the first available folder name
+        }
+
+        folder_num++;
+    }
+}
+
 
 //#ifdef _WIN32
 //#define FFMPEG_PATH "ffmpeg/windows/bin/ffmpeg.exe"
