@@ -51,7 +51,7 @@ void exportConfig(const Material& material, const int& rpm, const std::string& o
     */
     if (option == "json") {
         json config;
-        config["density"] = material.surface_tension;
+        config["density"] = material.density;
         config["surface_tension"] = material.surface_tension;
         config["dynamic_viscosity"] = material.dynamic_viscosity;
         config["kinematic_viscosity"] = material.kinematic_viscosity;
