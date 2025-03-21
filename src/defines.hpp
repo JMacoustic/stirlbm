@@ -45,12 +45,12 @@
 
 // ############################################################################################################
 // variables defined for stirLBM
-#define NUM_DATA 500 // How many videos to export
+#define NUM_DATA 10 // How many videos to export
 #define RPM_RANGE 5,10 // random range of rotor RPM
 #define CONFIG_OPTION "json" // config file export option. "json", "csv", "txt"
 #define START_CAPTURE 2000ull // when to start image export
 #define STOP_ROTOR 5000ull // when to stop rotor rotation
-#define STOP_CAPTURE 20000ull // when to stop image export
+#define STOP_CAPTURE 6000ull // when to stop image export
 #define FPS 3000u // simulation FPS
 #define GRID 128u // grid resolusion (one-side)
 

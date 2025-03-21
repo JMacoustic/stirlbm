@@ -45,7 +45,7 @@ Material selectMaterial(const std::vector<Material>& materials, const std::strin
 
 using json = nlohmann::json;
 
-void exportConfig(const Material& material, const int& rpm, const std::string& option, const std::string& exportpath, const std::string& repeat) {
+void exportConfig(const Material& material, const int& rpm, const std::string& option, const std::string& exportpath, const std::string& folder_str) {
     /*
     * export options: json, txt, csv
     */
@@ -57,7 +57,7 @@ void exportConfig(const Material& material, const int& rpm, const std::string& o
         config["kinematic_viscosity"] = material.kinematic_viscosity;
         config["RPM"] = rpm;
 
-        std::ofstream configuration(exportpath + "config_"+ repeat + ".json");
+        std::ofstream configuration(exportpath + "config_"+ folder_str + ".json");
         if (configuration.is_open()) {
             configuration << config.dump(4); // Pretty-print JSON with 4-space indentation
             configuration.close();
@@ -67,7 +67,7 @@ void exportConfig(const Material& material, const int& rpm, const std::string& o
         }
     }
     else if (option == "txt") {
-        std::ofstream configuration(exportpath + "config_" + repeat + ".txt");
+        std::ofstream configuration(exportpath + "config_" + folder_str + ".txt");
         if (configuration.is_open()) {
             configuration << "density: " << material.density << "\n";
             configuration << "surface_tension: " << material.surface_tension << "\n";
@@ -79,7 +79,7 @@ void exportConfig(const Material& material, const int& rpm, const std::string& o
         else std::cerr << "oops..something went wrong while exporting configuration\n";
     }
     else if (option == "csv") {
-        std::ofstream configuration(exportpath + "config_" + repeat + ".csv");
+        std::ofstream configuration(exportpath + "config_" + folder_str + ".csv");
         if (configuration.is_open()) {
             configuration << "density," << material.density << "\n";
             configuration << "surface_tension," << material.surface_tension << "\n";
@@ -91,21 +91,6 @@ void exportConfig(const Material& material, const int& rpm, const std::string& o
         else std::cerr << "oops..something went wrong while exporting configuration\n";
     }
     else std::cerr << "invalid export filetype";
-}
-
-std::string skipFoldername(const std::string& base_path, const std::string& prefix, int start_num){
-    int folder_num = start_num;
-    while (true) {
-        std::string folder_str = std::to_string(folder_num);
-        while (folder_str.length() < 4) folder_str = "0" + folder_str;
-        std::string folder_path = base_path + prefix + folder_str + "/";
-
-        if (!fs::exists(folder_path)) {
-            return folder_path;  // Return the first available folder name
-        }
-
-        folder_num++;
-    }
 }
 
 

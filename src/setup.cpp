@@ -124,16 +124,26 @@ void main_setup() { // without decay
 		});
 
 	// ####################################################################### run simulation, export images and data ##########################################################################
-	#if defined(GRAPHICS) && !defined(INTERACTIVE_GRAPHICS)
+#if defined(GRAPHICS) && !defined(INTERACTIVE_GRAPHICS)
 	// export settings
 	int folder_num = repeats + 1;
 	std::string folder_str = std::to_string(folder_num);
-	while (folder_str.length() < 4) folder_str = "0" + folder_str;
+	bool found = false;
+
+	while (true) {
+		folder_str = std::to_string(folder_num);
+		while (folder_str.length() < 4) folder_str = "0" + folder_str;
+		std::string folder_path = get_exe_path() + "../export/data_" + folder_str + "/";
+		if (!std::filesystem::exists(folder_path)) break;
+		folder_num++;
+	}
+
 	const string image_path = get_exe_path() + "../export/data_" + folder_str + "/";
+	std::filesystem::create_directories(image_path);
 	const string config_path = get_exe_path() + "../export/parameters/";
 	const string video_path = get_exe_path() + "../export/videos/";
 	num_data = NUM_DATA; // how many random materials we will export
-	#endif
+#endif
 
 	// Initialize simulation
 	lbm.graphics.visualization_modes = VIS_PHI_RAYTRACE;
@@ -147,23 +157,16 @@ void main_setup() { // without decay
 		mesh->rotate(float3x3(float3(0.0f, 0.0f, 1.0f), lbm_domega));
 #endif
 #ifdef DECAY_MODE && !defined STIR_MODE
-		if (lbm.get_t()<lbm_decay) {
+		if (lbm.get_t() < lbm_decay) {
 			lbm.voxelize_mesh_on_device(mesh, TYPE_S | TYPE_X, center, float3(0.0f), float3(0.0f, 0.0f, lbm_omega));
 			mesh->rotate(float3x3(float3(0.0f, 0.0f, 1.0f), lbm_domega));
 		}
 #endif
 		lbm.run(lbm_dt, lbm_stop);
 
-
-	// simulation loop
-	while (lbm.get_t() < lbm_stop) {
-
-		lbm.run(lbm_dt, lbm_stop);
-
 #if defined(GRAPHICS) && !defined(INTERACTIVE_GRAPHICS)
-		std::filesystem::create_directories(image_path);
-		std::filesystem::create_directories(config_path);
-		std::filesystem::create_directories(video_path);
+		if (!std::filesystem::exists(config_path)) std::filesystem::create_directories(config_path);
+		if (!std::filesystem::exists(video_path)) std::filesystem::create_directories(video_path);
 		exportConfig(selected, rpm, CONFIG_OPTION, config_path, folder_str);
 
 		if (lbm.graphics.next_frame(lbm_stop-lbm_init, OUTPUT_TIME, OUTPUT_FPS) && lbm_init < lbm.get_t() && lbm.get_t() < lbm_stop) {
@@ -174,4 +177,3 @@ void main_setup() { // without decay
 	}
 	// exportVideo(export_path)  //this function is still on develpment
 }
-
