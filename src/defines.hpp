@@ -45,7 +45,7 @@
 
 // ############################################################################################################
 // variables defined for stirLBM
-#define NUM_DATA 10 // How many videos to export
+#define NUM_DATA 300 // How many videos to export
 #define RPM_RANGE 6,12 // random range of rotor RPM
 #define CONFIG_OPTION "json" // config file export option. "json", "csv", "txt"
 #define START_CAPTURE 7000ull // when to start image export
@@ -55,8 +55,8 @@
 #define GRID 128u // grid resolusion (one-side)
 
 // choose stirring mode
-#define STIR_MODE //stir forever
-//#define DECAY_MODE // stop stirring at some point
+//#define STIR_MODE //stir forever
+#define DECAY_MODE // stop stirring at some point
 
 // export options
 #define OUTPUT_TIME 3.0f
