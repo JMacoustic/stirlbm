@@ -49,8 +49,8 @@
 #define RPM_RANGE 6,12 // random range of rotor RPM
 #define CONFIG_OPTION "json" // config file export option. "json", "csv", "txt"
 #define START_CAPTURE 7000ull // when to start image export
-#define STOP_ROTOR 8000ull // when to stop rotor rotation
-#define STOP_CAPTURE 17000ull // when to stop image export
+#define STOP_ROTOR 7000ull // when to stop rotor rotation
+#define STOP_CAPTURE 10000ull // when to stop image export
 #define FPS 3000u // simulation FPS
 #define GRID 128u // grid resolusion (one-side)
 
