@@ -127,16 +127,12 @@ void main_setup() { // without decay
 #if defined(GRAPHICS) && !defined(INTERACTIVE_GRAPHICS)
 	// export settings
 	int folder_num = repeats + 1;
-	std::string folder_str = std::to_string(folder_num);
-	bool found = false;
-
-	while (true) {
-		folder_str = std::to_string(folder_num);
-		while (folder_str.length() < 4) folder_str = "0" + folder_str;
-		std::string folder_path = get_exe_path() + "../export/data_" + folder_str + "/";
-		if (!std::filesystem::exists(folder_path)) break;
-		folder_num++;
-	}
+	#ifdef DECAY_MODE
+	std::string folder_str = exportPath(get_exe_path(), true, folder_num);
+	#endif
+	#ifdef STIR_MODE
+	std::string folder_str = exportPath(get_exe_path(), false, folder_num);
+	#endif
 
 	const string image_path = get_exe_path() + "../export/data_" + folder_str + "/";
 	std::filesystem::create_directories(image_path);
@@ -152,11 +148,11 @@ void main_setup() { // without decay
 	// simulation loop
 
 	while (lbm.get_t() < lbm_stop) {
-#ifdef STIR_MODE && !defined DECAY_MODE
+#ifdef STIR_MODE
 		lbm.voxelize_mesh_on_device(mesh, TYPE_S | TYPE_X, center, float3(0.0f), float3(0.0f, 0.0f, lbm_omega));
 		mesh->rotate(float3x3(float3(0.0f, 0.0f, 1.0f), lbm_domega));
 #endif
-#ifdef DECAY_MODE && !defined STIR_MODE
+#ifdef DECAY_MODE
 		if (lbm.get_t() < lbm_decay) {
 			lbm.voxelize_mesh_on_device(mesh, TYPE_S | TYPE_X, center, float3(0.0f), float3(0.0f, 0.0f, lbm_omega));
 			mesh->rotate(float3x3(float3(0.0f, 0.0f, 1.0f), lbm_domega));
@@ -170,7 +166,7 @@ void main_setup() { // without decay
 		exportConfig(selected, rpm, CONFIG_OPTION, config_path, folder_str);
 
 		if (lbm.graphics.next_frame(lbm_stop-lbm_init, OUTPUT_TIME, OUTPUT_FPS) && lbm_init < lbm.get_t() && lbm.get_t() < lbm_stop) {
-			lbm.graphics.set_camera_free(float3(0.0f * (float)Nx, 0.0f * (float)Ny, 0.5f * (float)Nz), 0.0f, 90.0f, 80.0f);
+			lbm.graphics.set_camera_free(float3(0.0f * (float)Nx, 0.0f * (float)Ny, 0.4f * (float)Nz), 0.0f, 90.0f, 80.0f);
 			lbm.graphics.write_frame(image_path);
 		}
 #endif // GRAPHICS && !INTERACTIVE_GRAPHICS

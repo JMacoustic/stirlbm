@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <filesystem>
 #include "json.hpp"
 
 std::vector<Material> readCSV(const std::string& filename) {
@@ -93,6 +94,32 @@ void exportConfig(const Material& material, const int& rpm, const std::string& o
     else std::cerr << "invalid export filetype";
 }
 
+std::string exportPath(const std::string& exe_path, const bool& decay, int& folder_num) {
+    std::string folder_str = std::to_string(folder_num);
+    if (decay) {
+        while (true) {
+            folder_str = std::to_string(folder_num);
+            while (folder_str.length() < 4) folder_str = "0" + folder_str;
+            std::string folder_path = exe_path + "../export/data_decay_" + folder_str + "/";
+            if (!std::filesystem::exists(folder_path)) {
+                return "decay_" + folder_str;
+            }
+            folder_num++;
+        }
+    }
+    else {
+        while (true) {
+            folder_str = std::to_string(folder_num);
+            while (folder_str.length() < 4) folder_str = "0" + folder_str;
+            std::string folder_path = exe_path + "../export/data_" + folder_str + "/";
+            if (!std::filesystem::exists(folder_path)) {
+                return folder_str;
+            }
+            folder_num++;
+        }
+    }
+    
+}
 
 //#ifdef _WIN32
 //#define FFMPEG_PATH "ffmpeg/windows/bin/ffmpeg.exe"

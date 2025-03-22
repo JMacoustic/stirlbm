@@ -28,8 +28,8 @@
 //#define INTERACTIVE_GRAPHICS_ASCII // enable interactive graphics in ASCII mode the console; start/pause the simulation by pressing P
 #define GRAPHICS // run FluidX3D in the console, but still enable graphics functionality for writing rendered frames to the hard drive
 
-#define GRAPHICS_FRAME_WIDTH 1024 // set frame width if only GRAPHICS is enabled
-#define GRAPHICS_FRAME_HEIGHT 1024 // set frame height if only GRAPHICS is enabled
+#define GRAPHICS_FRAME_WIDTH 256 // set frame width if only GRAPHICS is enabled
+#define GRAPHICS_FRAME_HEIGHT 256 // set frame height if only GRAPHICS is enabled
 #define GRAPHICS_BACKGROUND_COLOR 0x000000 // set background color; black background (default) = 0x000000, white background = 0xFFFFFF
 #define GRAPHICS_U_MAX 0.18f // maximum velocity for velocity coloring in units of LBM lattice speed of sound (c=1/sqrt(3)) (default: 0.18f)
 #define GRAPHICS_RHO_DELTA 0.01f // coloring range for density rho will be [1.0f-GRAPHICS_RHO_DELTA, 1.0f+GRAPHICS_RHO_DELTA] (default: 0.01f)
@@ -46,11 +46,11 @@
 // ############################################################################################################
 // variables defined for stirLBM
 #define NUM_DATA 10 // How many videos to export
-#define RPM_RANGE 5,10 // random range of rotor RPM
+#define RPM_RANGE 6,12 // random range of rotor RPM
 #define CONFIG_OPTION "json" // config file export option. "json", "csv", "txt"
-#define START_CAPTURE 2000ull // when to start image export
-#define STOP_ROTOR 5000ull // when to stop rotor rotation
-#define STOP_CAPTURE 6000ull // when to stop image export
+#define START_CAPTURE 7000ull // when to start image export
+#define STOP_ROTOR 8000ull // when to stop rotor rotation
+#define STOP_CAPTURE 17000ull // when to stop image export
 #define FPS 3000u // simulation FPS
 #define GRID 128u // grid resolusion (one-side)
 
@@ -59,8 +59,8 @@
 //#define DECAY_MODE // stop stirring at some point
 
 // export options
-#define OUTPUT_TIME 5.0f
-#define OUTPUT_FPS 20u
+#define OUTPUT_TIME 3.0f
+#define OUTPUT_FPS 10u
 
 // #############################################################################################################
 
