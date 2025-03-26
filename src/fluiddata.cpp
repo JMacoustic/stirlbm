@@ -100,7 +100,7 @@ std::string exportPath(const std::string& exe_path, const bool& decay, int& fold
         while (true) {
             folder_str = std::to_string(folder_num);
             while (folder_str.length() < 4) folder_str = "0" + folder_str;
-            std::string folder_path = exe_path + "../export/data_decay_" + folder_str + "/";
+            std::string folder_path = exe_path + "../export/data_" + folder_str + "/";
             if (!std::filesystem::exists(folder_path)) {
                 return "decay_" + folder_str;
             }
