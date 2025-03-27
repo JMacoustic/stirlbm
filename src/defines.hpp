@@ -45,7 +45,7 @@
 
 // ############################################################################################################
 // variables defined for stirLBM
-#define NUM_DATA 100 // How many videos to export
+#define NUM_DATA 200 // How many videos to export
 #define RPM_RANGE 6,12 // random range of rotor RPM
 #define RPM_RANGE1 6,13  // RPM Range 1
 #define RPM_RANGE2 6,13 // RPM Range 2

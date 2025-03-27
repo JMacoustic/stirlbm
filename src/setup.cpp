@@ -41,7 +41,7 @@ void main_setup() { // benchmark; required extensions in defines.hpp: BENCHMARK,
 
 
 void main_setup() { // without decay
-	std::string filename = "property/properties_new.csv";
+	std::string filename = "property/properties_extended.csv";
 	std::vector<Material> materials = readCSV(filename);
 
 	if (materials.empty()) {
@@ -55,31 +55,31 @@ void main_setup() { // without decay
 	std::uniform_int_distribution<int> dist(0, materials.size() - 1);
 	const int random_num = dist(gen);
 	Material selected = materials[random_num];
-	//std::uniform_int_distribution<int> dist2(RPM_RANGE);
 
-	float rpm = 8.0f;
+	std::uniform_real_distribution<float> dist2(RPM_RANGE);
+	float rpm = dist2(gen);
 
-	if (random_num == 0) {
-		std::uniform_real_distribution<float> dist2(RPM_RANGE1);
-		rpm = dist2(gen);
-	}
-	else if (random_num == 1) {
-		std::uniform_real_distribution<float> dist2(RPM_RANGE2);
-		rpm = dist2(gen);
-	}
-	else if (random_num == 2) {
-		std::uniform_real_distribution<float> dist2(RPM_RANGE3);
-		rpm = dist2(gen);
-	}
-	else if (random_num == 3) {
-		std::uniform_real_distribution<float> dist2(RPM_RANGE4);
-		rpm = dist2(gen);
-	}
-	else if (random_num == 4) {
-		std::uniform_real_distribution<float> dist2(RPM_RANGE5);
-		rpm = dist2(gen);
-	}
-	else std::cout << "material selection error!";
+	//if (random_num == 0) {
+	//	std::uniform_real_distribution<float> dist2(RPM_RANGE1);
+	//	rpm = dist2(gen);
+	//}
+	//else if (random_num == 1) {
+	//	std::uniform_real_distribution<float> dist2(RPM_RANGE2);
+	//	rpm = dist2(gen);
+	//}
+	//else if (random_num == 2) {
+	//	std::uniform_real_distribution<float> dist2(RPM_RANGE3);
+	//	rpm = dist2(gen);
+	//}
+	//else if (random_num == 3) {
+	//	std::uniform_real_distribution<float> dist2(RPM_RANGE4);
+	//	rpm = dist2(gen);
+	//}
+	//else if (random_num == 4) {
+	//	std::uniform_real_distribution<float> dist2(RPM_RANGE5);
+	//	rpm = dist2(gen);
+	//}
+	//else std::cout << "material selection error!";
 
 
 	// print result
