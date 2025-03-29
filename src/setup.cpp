@@ -41,7 +41,7 @@ void main_setup() { // benchmark; required extensions in defines.hpp: BENCHMARK,
 
 
 void main_setup() { // without decay
-	std::string filename = "property/properties_extended.csv";
+	std::string filename = "property/properties_cleaned.csv";
 	std::vector<Material> materials = readCSV(filename);
 
 	if (materials.empty()) {
