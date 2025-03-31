@@ -57,7 +57,6 @@ void main_setup() { // without decay
 	Material selected = materials[random_num];
 
 	std::uniform_real_distribution<float> dist2(RPM_RANGE);
-	// float rpm = dist2(gen);
 	float rpm = 10;
 
 	//if (random_num == 0) {
@@ -84,6 +83,10 @@ void main_setup() { // without decay
 
 
 	// print result
+
+	selected.density = 1000;
+	selected.surface_tension = 0.042;
+
 	std::cout << "\nSelected Material Properties:\n";
 	std::cout << "Name: " << selected.name << "\n";
 	std::cout << "Density: " << selected.density << " kg/m^3\n";
@@ -98,11 +101,12 @@ void main_setup() { // without decay
 	const float si_omega = rpm * 2.0f * 3.14f;
 	const float si_radius = si_box * fan_ratio / 2.0f; // rotor size
 	const float si_u = si_radius * si_omega;
-	const float si_rho = 1000;
+	const float si_rho = selected.density;
 	const float si_nu = selected.kinematic_viscosity; // water: 0.000001
-	const float si_sigma = 0.042;
+	const float si_sigma = selected.surface_tension;
 	const float si_g = 9.8f;
 	const bool enable_cylinder = true;
+	
 
 	// lbm reference values
 	const uint fps = FPS;
