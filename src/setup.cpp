@@ -41,51 +41,25 @@ void main_setup() { // benchmark; required extensions in defines.hpp: BENCHMARK,
 
 
 void main_setup() { // without decay
-	std::string filename = "property/properties_shrinked.csv";
-	std::vector<Material> materials = readCSV(filename);
-
+	std::string filename = PROPERTY_PATH;
+	std::vector<Material> materials = readCSV(filename, VISC_RANGE);
 	if (materials.empty()) {
 		std::cerr << "No data found!" << std::endl;
 		return;
 	}
 
-	// random selection
-	std::random_device rd;
-	std::mt19937 gen(rd());
-	std::uniform_int_distribution<int> dist(0, materials.size() - 1);
-	const int random_num = dist(gen);
-	Material selected = materials[random_num];
+	// select in visc order
+	Material selected = materials[repeats];
 
 	std::uniform_real_distribution<float> dist2(RPM_RANGE);
 	float rpm = 10;
-
-	//if (random_num == 0) {
-	//	std::uniform_real_distribution<float> dist2(RPM_RANGE1);
-	//	rpm = dist2(gen);
-	//}
-	//else if (random_num == 1) {
-	//	std::uniform_real_distribution<float> dist2(RPM_RANGE2);
-	//	rpm = dist2(gen);
-	//}
-	//else if (random_num == 2) {
-	//	std::uniform_real_distribution<float> dist2(RPM_RANGE3);
-	//	rpm = dist2(gen);
-	//}
-	//else if (random_num == 3) {
-	//	std::uniform_real_distribution<float> dist2(RPM_RANGE4);
-	//	rpm = dist2(gen);
-	//}
-	//else if (random_num == 4) {
-	//	std::uniform_real_distribution<float> dist2(RPM_RANGE5);
-	//	rpm = dist2(gen);
-	//}
-	//else std::cout << "material selection error!";
-
 
 	// print result
 
 	selected.density = 1000;
 	selected.surface_tension = 0.042;
+	selected.dynamic_viscosity *= MAGNIFY;
+	selected.kinematic_viscosity *= MAGNIFY;
 
 	std::cout << "\nSelected Material Properties:\n";
 	std::cout << "Name: " << selected.name << "\n";
@@ -161,14 +135,13 @@ void main_setup() { // without decay
 	std::string folder_str = exportPath(get_exe_path(), true, folder_num);
 	#endif
 	#ifdef STIR_MODE
-	std::string folder_str = exportPath(get_exe_path(), false, folder_num);
+	std::string folder_path = exportPath(get_exe_path(), false, folder_num);
 	#endif
 
-	const string image_path = get_exe_path() + "../export/data_" + folder_str + "/";
+	const string image_path = get_exe_path() + "../export/video_" + folder_str + "/";
 	std::filesystem::create_directories(image_path);
 	const string config_path = get_exe_path() + "../export/parameters/";
 	const string video_path = get_exe_path() + "../export/videos/";
-	num_data = NUM_DATA; // how many random materials we will export
 #endif
 
 	// Initialize simulation

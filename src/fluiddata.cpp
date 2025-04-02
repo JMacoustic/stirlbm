@@ -4,15 +4,16 @@
 #include <iostream>
 #include <filesystem>
 #include "json.hpp"
+#include "defines.hpp"
 
-std::vector<Material> readCSV(const std::string& filename) {
+std::vector<Material> readCSV(const std::string& filename, const float& visc_min, const float& visc_max) {
     std::vector<Material> materials;
-    std::ifstream file;
-    file.open(filename);
+    std::ifstream file(filename);
     std::string line;
 
     if (!file.is_open()) {
-        std::cerr << "error opening file: " << filename << std::endl;
+        std::cerr << "Error opening file: " << filename << std::endl;
+        return materials;
     }
 
     std::getline(file, line);
@@ -26,8 +27,10 @@ std::vector<Material> readCSV(const std::string& filename) {
         std::getline(ss, temp, ','); mat.surface_tension = std::stof(temp);
         std::getline(ss, temp, ','); mat.dynamic_viscosity = std::stof(temp);
         std::getline(ss, temp, ','); mat.kinematic_viscosity = std::stof(temp);
-    
-        materials.push_back(mat);
+
+        if (mat.dynamic_viscosity >= visc_min && mat.dynamic_viscosity <= visc_max) {
+            materials.push_back(mat);
+        }
     }
 
     file.close();
@@ -100,9 +103,9 @@ std::string exportPath(const std::string& exe_path, const bool& decay, int& fold
         while (true) {
             folder_str = std::to_string(folder_num);
             while (folder_str.length() < 4) folder_str = "0" + folder_str;
-            std::string folder_path = exe_path + "../export/data_" + folder_str + "/";
+            std::string folder_path = exe_path + "../export/video_decay_"+ std::to_string(OUTPUT_FPS)+ "x" + to_string_precision(OUTPUT_TIME, 1) + INFO + folder_str + "/";
             if (!std::filesystem::exists(folder_path)) {
-                return folder_str;
+                return "decay_" + std::to_string(OUTPUT_FPS) + "x" + to_string_precision(OUTPUT_TIME, 1) + INFO + folder_str;
             }
             folder_num++;
         }
@@ -111,14 +114,21 @@ std::string exportPath(const std::string& exe_path, const bool& decay, int& fold
         while (true) {
             folder_str = std::to_string(folder_num);
             while (folder_str.length() < 4) folder_str = "0" + folder_str;
-            std::string folder_path = exe_path + "../export/data_" + folder_str + "/";
+            std::string folder_path = exe_path + "../export/video_steady_" + std::to_string(OUTPUT_FPS) + "x" + to_string_precision(OUTPUT_TIME, 1) + INFO + folder_str + "/";
             if (!std::filesystem::exists(folder_path)) {
-                return folder_str;
+                return "steady_" + std::to_string(OUTPUT_FPS) + "x" + to_string_precision(OUTPUT_TIME, 1) + INFO + folder_str;
             }
             folder_num++;
         }
     }
     
+}
+
+std::string to_string_precision(const float& value, const int& n) {
+	std::ostringstream out;
+	out.precision(n);
+	out << std::fixed << value;
+	return out.str();
 }
 
 //#ifdef _WIN32

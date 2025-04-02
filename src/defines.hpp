@@ -45,13 +45,13 @@
 
 // ############################################################################################################
 // variables defined for stirLBM
-#define NUM_DATA 250 // How many videos to export
+//#define NUM_DATA 250 // How many videos to export
+#define PROPERTY_PATH "property/properties_shrinked.csv" // path to material properties
+#define NUM_LOOPS 2 // How many loops of all materials to export
 #define RPM_RANGE 6,13 // random range of rotor RPM
-#define RPM_RANGE1 6,13  // RPM Range 1
-#define RPM_RANGE2 6,13 // RPM Range 2
-#define RPM_RANGE3 6,13 // RPM Range 3
-#define RPM_RANGE4 6,13 // RPM Range 4
-#define RPM_RANGE5 6,13 // RPM Range 5
+#define VISC_RANGE 0, 0.001 // dynamic viscosity range
+#define INFO "_" // should add _ underbar at the end
+#define MAGNIFY 1.0f // magnification factor for the viscosity
 #define CONFIG_OPTION "json" // config file export option. "json", "csv", "txt"
 #define START_CAPTURE 7000ull // when to start image export
 #define STOP_ROTOR 7000ull // when to stop rotor rotation

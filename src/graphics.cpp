@@ -1,4 +1,6 @@
 #include "graphics.hpp"
+#include "fluiddata.hpp"
+
 
 vector<string> main_arguments = vector<string>(); // console arguments
 std::atomic_bool running = true;
@@ -803,11 +805,17 @@ int main(int argc, char* argv[]) {
 
 #if !defined(INTERACTIVE_GRAPHICS) && !defined(INTERACTIVE_GRAPHICS_ASCII)
 int repeats = 0;
-int num_data = 5;
+int num_data = 0;
 
 int main(int argc, char* argv[]) {
 	main_arguments = get_main_arguments(argc, argv);
 	camera = Camera(GRAPHICS_FRAME_WIDTH, GRAPHICS_FRAME_HEIGHT, 60u); // width and height must be divisible by 8
+	int material_size = readCSV(PROPERTY_PATH, VISC_RANGE).size();
+	int loops = NUM_LOOPS;
+	num_data = loops * material_size;
+	std::cout << "Material Size: " << material_size << std::endl;
+	std::cout << "Loops: " << loops << std::endl;
+	std::cout << "Total Data: " << num_data << std::endl;
 
 	for (repeats = 0; repeats < num_data; repeats++) {
 		thread compute_thread(main_physics); // start main_physics() in a new thread
@@ -816,11 +824,13 @@ int main(int argc, char* argv[]) {
 	    // ##########################################################################
 		compute_thread.join();
 		std::cout << "video " << repeats+1u << " rendered\n";
+		if ((repeats + 1u) % material_size == 0) {
+			std::cout << "loop " << int(repeats / material_size) << " finished\n";
+		}
 	}
 	running = false;
 
 	return 0;
 }
-
 #endif // no INTERACTIVE_GRAPHICS and no INTERACTIVE_GRAPHICS_ASCII
 #endif // GRAPHICS
