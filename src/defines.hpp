@@ -50,7 +50,7 @@
 #define NUM_LOOPS 2 // How many loops of all materials to export
 #define RPM_RANGE 6,13 // random range of rotor RPM
 #define VISC_RANGE 0, 0.001 // dynamic viscosity range
-#define INFO "_" // should add _ underbar at the end
+#define INFO "" // should add _ underbar at the end
 #define MAGNIFY 1.0f // magnification factor for the viscosity
 #define CONFIG_OPTION "json" // config file export option. "json", "csv", "txt"
 #define START_CAPTURE 7000ull // when to start image export
