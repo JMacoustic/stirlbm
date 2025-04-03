@@ -28,7 +28,7 @@ std::vector<Material> readCSV(const std::string& filename, const float& visc_min
         std::getline(ss, temp, ','); mat.dynamic_viscosity = std::stof(temp);
         std::getline(ss, temp, ','); mat.kinematic_viscosity = std::stof(temp);
 
-        if (mat.dynamic_viscosity >= visc_min && mat.dynamic_viscosity <= visc_max) {
+        if (mat.dynamic_viscosity > visc_min && mat.dynamic_viscosity <= visc_max) {
             materials.push_back(mat);
         }
     }

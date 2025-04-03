@@ -47,13 +47,24 @@ void main_setup() { // without decay
 		std::cerr << "No data found!" << std::endl;
 		return;
 	}
+#if defined(INTERACTIVE_GRAPHICS) || defined(INTERACTIVE_GRAPHICS_ASCII)
+	// random selection if not exporting mode
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<int> dist(0, materials.size() - 1);
+	const int random_num = dist(gen);
+	Material selected = materials[random_num];
+#endif
 
+#if defined(GRAPHICS) && !defined(INTERACTIVE_GRAPHICS)
 	// select in visc order
-	Material selected = materials[repeats];
+	int material_idx = repeats / NUM_LOOPS;
+	Material selected = materials[int(material_idx)];
+#endif
 
 	std::uniform_real_distribution<float> dist2(RPM_RANGE);
-	float rpm = 10;
 
+	float rpm = 10;
 	// print result
 
 	selected.density = 1000;
@@ -130,7 +141,7 @@ void main_setup() { // without decay
 	// ####################################################################### run simulation, export images and data ##########################################################################
 #if defined(GRAPHICS) && !defined(INTERACTIVE_GRAPHICS)
 	// export settings
-	int folder_num = repeats + 1;
+	int folder_num = repeats + NAMING_START;
 	#ifdef DECAY_MODE
 	std::string folder_str = exportPath(get_exe_path(), true, folder_num);
 	#endif
