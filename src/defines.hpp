@@ -50,13 +50,13 @@
 #define NUM_LOOPS 1 // How many loops of all materials to export
 #define RPM_RANGE 6,13 // random range of rotor RPM
 #define VISC_RANGE 0, 1// dynamic viscosity range
-#define INFO "extendtime_" // should add _ underbar at the end
+#define INFO "densefps" // should add _ underbar at the end
 #define NAMING_START 1 // start naming from 1
 #define MAGNIFY 100.0f // magnification factor for the viscosity
 #define CONFIG_OPTION "json" // config file export option. "json", "csv", "txt"
 #define START_CAPTURE 7000ull // when to start image export
 #define STOP_ROTOR 7000ull // when to stop rotor rotation
-#define STOP_CAPTURE 15000ull // when to stop image export
+#define STOP_CAPTURE 12000ull // when to stop image export
 #define FPS 3000u // simulation FPS
 #define GRID 128u // grid resolusion (one-side)
 
@@ -65,8 +65,8 @@
 #define DECAY_MODE // stop stirring at some point
 
 // export options
-#define OUTPUT_TIME 8.0f
-#define OUTPUT_FPS 10u
+#define OUTPUT_TIME 5.0f
+#define OUTPUT_FPS 20u
 
 // #############################################################################################################
 
