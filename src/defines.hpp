@@ -49,7 +49,7 @@
 #define PROPERTY_PATH "property/properties_shrinked.csv" // path to material properties
 #define NUM_LOOPS 1 // How many loops of all materials to export
 #define RPM_RANGE 6,13 // random range of rotor RPM
-#define VISC_RANGE 0, 0.003// dynamic viscosity range
+#define VISC_RANGE 0, 1// dynamic viscosity range
 #define INFO "512resolution_" // should add _ underbar at the end
 #define NAMING_START 1 // start naming from 1
 #define MAGNIFY 100.0f // magnification factor for the viscosity
