@@ -146,10 +146,10 @@ void main_setup() { // without decay
 	std::string folder_str = exportPath(get_exe_path(), true, folder_num);
 	#endif
 	#ifdef STIR_MODE
-	std::string folder_path = exportPath(get_exe_path(), false, folder_num);
+	std::string folder_str = exportPath(get_exe_path(), false, folder_num);
 	#endif
 
-	const string image_path = get_exe_path() + "../export/video_" + folder_str + "/";
+	const string image_path = get_exe_path() + "../export/" + folder_str + "/";
 	std::filesystem::create_directories(image_path);
 	const string config_path = get_exe_path() + "../export/parameters/";
 	const string video_path = get_exe_path() + "../export/videos/";

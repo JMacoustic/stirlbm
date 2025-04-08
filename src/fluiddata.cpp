@@ -103,7 +103,7 @@ std::string exportPath(const std::string& exe_path, const bool& decay, int& fold
         while (true) {
             folder_str = std::to_string(folder_num);
             while (folder_str.length() < 4) folder_str = "0" + folder_str;
-            std::string folder_path = exe_path + "../export/video_decay_" + to_string_precision(OUTPUT_TIME, 1) + "s_" + std::to_string(OUTPUT_FPS) + "fps_" + INFO + folder_str + "/";
+            std::string folder_path = exe_path + "../export/decay_" + to_string_precision(OUTPUT_TIME, 1) + "s_" + std::to_string(OUTPUT_FPS) + "fps_" + INFO + folder_str + "/";
             if (!std::filesystem::exists(folder_path)) {
                 return "decay_" + to_string_precision(OUTPUT_TIME, 1) + "s_" + std::to_string(OUTPUT_FPS) + "fps_" + INFO + folder_str;
             }
@@ -114,7 +114,7 @@ std::string exportPath(const std::string& exe_path, const bool& decay, int& fold
         while (true) {
             folder_str = std::to_string(folder_num);
             while (folder_str.length() < 4) folder_str = "0" + folder_str;
-            std::string folder_path = exe_path + "../export/video_steady_" + to_string_precision(OUTPUT_TIME, 1) + "s_" + std::to_string(OUTPUT_FPS) + "fps_" + INFO + folder_str + "/";
+            std::string folder_path = exe_path + "../export/steady_" + to_string_precision(OUTPUT_TIME, 1) + "s_" + std::to_string(OUTPUT_FPS) + "fps_" + INFO + folder_str + "/";
             if (!std::filesystem::exists(folder_path)) {
                 return "steady_" + to_string_precision(OUTPUT_TIME, 1) + "s_" + std::to_string(OUTPUT_FPS) + "fps_" + INFO + folder_str;
             }

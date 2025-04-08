@@ -3,7 +3,7 @@ import os
 import glob
 
 export_dir = "export"
-data_folders = sorted([f for f in os.listdir(export_dir) if f.startswith("data_")])
+data_folders = sorted([f for f in os.listdir(export_dir) if (f.startswith("video_") or f.startswith("decay_") or f.startswith("steady_"))])
 fps = 10 
 output_format = "mp4v"
 
