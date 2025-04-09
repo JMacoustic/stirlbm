@@ -64,7 +64,7 @@ void main_setup() { // without decay
 
 	std::uniform_real_distribution<float> dist2(RPM_RANGE);
 
-	float rpm = 10;
+	float rpm = 13;
 	// print result
 
 	selected.density = 1000;

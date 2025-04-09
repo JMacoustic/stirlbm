@@ -28,8 +28,8 @@
 //#define INTERACTIVE_GRAPHICS_ASCII // enable interactive graphics in ASCII mode the console; start/pause the simulation by pressing P
 #define GRAPHICS // run FluidX3D in the console, but still enable graphics functionality for writing rendered frames to the hard drive
 
-#define GRAPHICS_FRAME_WIDTH 256 // set frame width if only GRAPHICS is enabled
-#define GRAPHICS_FRAME_HEIGHT 256 // set frame height if only GRAPHICS is enabled
+#define GRAPHICS_FRAME_WIDTH 512 // set frame width if only GRAPHICS is enabled
+#define GRAPHICS_FRAME_HEIGHT 512 // set frame height if only GRAPHICS is enabled
 #define GRAPHICS_BACKGROUND_COLOR 0x000000 // set background color; black background (default) = 0x000000, white background = 0xFFFFFF
 #define GRAPHICS_U_MAX 0.18f // maximum velocity for velocity coloring in units of LBM lattice speed of sound (c=1/sqrt(3)) (default: 0.18f)
 #define GRAPHICS_RHO_DELTA 0.01f // coloring range for density rho will be [1.0f-GRAPHICS_RHO_DELTA, 1.0f+GRAPHICS_RHO_DELTA] (default: 0.01f)
@@ -50,7 +50,7 @@
 #define NUM_LOOPS 1 // How many loops of all materials to export
 #define RPM_RANGE 6,13 // random range of rotor RPM
 #define VISC_RANGE 0, 1// dynamic viscosity range
-#define INFO "densefps_" // should add _ underbar at the end
+#define INFO "highrpm_" // should add _ underbar at the end
 #define NAMING_START 1 // start naming from 1
 #define MAGNIFY 100.0f // magnification factor for the viscosity
 #define CONFIG_OPTION "json" // config file export option. "json", "csv", "txt"
