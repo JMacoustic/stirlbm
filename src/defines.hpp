@@ -66,7 +66,7 @@
 
 // export options
 #define OUTPUT_TIME 5.0f
-#define OUTPUT_FPS 20u
+#define OUTPUT_FPS 10u
 
 // #############################################################################################################
 
