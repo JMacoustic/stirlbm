@@ -64,11 +64,9 @@ void main_setup() { // without decay
 
 	std::uniform_real_distribution<float> dist2(RPM_RANGE);
 
-	float rpm = 5;
+	float rpm = 10;
 	// print result
 
-	selected.density = 1000;
-	selected.surface_tension = 0.042;
 	selected.dynamic_viscosity *= MAGNIFY;
 	selected.kinematic_viscosity *= MAGNIFY;
 
