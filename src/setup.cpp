@@ -155,7 +155,7 @@ void main_setup() { // without decay
 #endif
 
 	// Initialize simulation
-	lbm.graphics.visualization_modes = VIS_FLAG_LATTICE;
+	lbm.graphics.visualization_modes = VIS_PHI_RAYTRACE;
 	lbm.run(0u, lbm_stop);
 
 	// simulation loop
