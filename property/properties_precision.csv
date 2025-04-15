@@ -1,0 +1,7 @@
+﻿name,density,surface_tension,dynamic_viscosity,kinematic_viscosity
+Pyridine,979,0.0367,0.00088,8.99E-07
+Acetophenone (1-phenylethanone),1024,0.039,0.00168,1.64E-06
+Bis(2-ethylhexyl)phthalate (BEHP)_0.29,993.49,0.060636,0.003280673,3.30E-06
+Ethylene glycol,1111,0.0484,0.0161,1.45E-05
+1-3-Butanediol_0.8,1001.4,0.05222,0.038363729,3.83E-05
+1-3-Butanediol_0.99,1001.97,0.047356,0.093782517,9.36E-05

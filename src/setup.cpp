@@ -47,10 +47,11 @@ void main_setup() { // without decay
 		std::cerr << "No data found!" << std::endl;
 		return;
 	}
-#if defined(INTERACTIVE_GRAPHICS) || defined(INTERACTIVE_GRAPHICS_ASCII)
-	// random selection if not exporting mode
+
 	std::random_device rd;
 	std::mt19937 gen(rd());
+#if defined(INTERACTIVE_GRAPHICS) || defined(INTERACTIVE_GRAPHICS_ASCII)
+	// random selection if not exporting mode
 	std::uniform_int_distribution<int> dist(0, materials.size() - 1);
 	const int random_num = dist(gen);
 	Material selected = materials[random_num];
@@ -64,7 +65,7 @@ void main_setup() { // without decay
 
 	std::uniform_real_distribution<float> dist2(RPM_RANGE);
 
-	float rpm = 10;
+	float rpm = dist2(gen);
 	// print result
 
 	selected.dynamic_viscosity *= MAGNIFY;
@@ -120,7 +121,7 @@ void main_setup() { // without decay
 	parallel_for(lbm.get_N(), [&](ulong n) {
 		uint x = 0u, y = 0u, z = 0u;
 		lbm.coordinates(n, x, y, z);
-		int h = Nz / 3u;
+		int h = (Nz / 3u);
 
 		if (z < h) {
 			lbm.flags[n] = TYPE_F;
@@ -154,7 +155,7 @@ void main_setup() { // without decay
 #endif
 
 	// Initialize simulation
-	lbm.graphics.visualization_modes = VIS_PHI_RAYTRACE;
+	lbm.graphics.visualization_modes = VIS_FLAG_LATTICE;
 	lbm.run(0u, lbm_stop);
 
 	// simulation loop
