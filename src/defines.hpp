@@ -47,12 +47,12 @@
 // ############################################################################################################
 // variables defined for stirLBM
 //#define NUM_DATA 250 // How many videos to export
-#define PROPERTY_PATH "property/properties_precision.csv" // path to material properties
-#define NUM_LOOPS 50 // How many loops of all materials to export
+#define PROPERTY_PATH "property/properties_shrinked.csv" // path to material properties
+#define NUM_LOOPS 5 // How many loops of all materials to export
 #define RPM_RANGE 6,13 // random range of rotor RPM
 #define TRANSPARENCY_RANGE 0, 1 // fluid transparency range
 #define VISC_RANGE 0, 1// dynamic viscosity range
-#define INFO "precision50_" // should add _ underbar at the end
+#define INFO "surfdensrpm_" // should add _ underbar at the end
 #define NAMING_START 1 // start naming from 1
 #define MAGNIFY 100.0f // magnification factor for the viscosity
 #define CONFIG_OPTION "json" // config file export option. "json", "csv", "txt"
