@@ -179,7 +179,7 @@ void main_setup() { // without decay
 		exportConfig(selected, magnify, rpm, CONFIG_OPTION, config_path, folder_str);
 
 		if (lbm.graphics.next_frame(lbm_stop-lbm_init, OUTPUT_TIME, OUTPUT_FPS) && lbm_init < lbm.get_t() && lbm.get_t() < lbm_stop) {
-			lbm.graphics.set_camera_free(float3(0.0f * (float)Nx, 0.0f * (float)Ny, 0.4f * (float)Nz), 0.0f, 90.0f, 80.0f);
+			lbm.graphics.set_camera_free(float3(0.0f * (float)Nx, 0.0f * (float)Ny, 0.3f * (float)Nz), 0.0f, 90.0f, 80.0f);
 			lbm.graphics.write_frame(image_path);
 		}
 #endif // GRAPHICS && !INTERACTIVE_GRAPHICS
