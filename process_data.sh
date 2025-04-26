@@ -20,9 +20,7 @@ mkdir -p "$customname/$customname"
 mv export/videos "$customname/$customname"
 mv export/parameters "$customname/$customname"
 
-
-
-echo "processing complete!"
+echo "moved file to new directory"
 
 if [[ "$do_rename" == "y" || "$do_rename" == "Y" ]]; then
     # Renaming logic
@@ -60,9 +58,9 @@ if [[ "$do_rename" == "y" || "$do_rename" == "Y" ]]; then
     done
 
     for ((i=end_old; i>=start_old; i--)); do
-        old_name=$(printf "$param_dir/${prefix}%04d.json" $i)
+        old_name=$(printf "$param_dir/config_${prefix}%04d.json" $i)
         new_index=$((start_new + i - start_old))
-        new_name=$(printf "$param_dir/${prefix}%04d.json" $new_index)
+        new_name=$(printf "$param_dir/config_${prefix}%04d.json" $new_index)
 
         if [ -f "$old_name" ]; then
             mv "$old_name" "$new_name"
@@ -71,7 +69,7 @@ if [[ "$do_rename" == "y" || "$do_rename" == "Y" ]]; then
     done
 
     for ((i=start_new-1; i>=start_old; i--)); do
-        del_name=$(printf "$param_dir/${prefix}%04d.json" $i)
+        del_name=$(printf "$param_dir/config_${prefix}%04d.json" $i)
 
         if [ -f "$del_name" ]; then
             rm "$del_name"
