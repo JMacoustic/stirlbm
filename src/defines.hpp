@@ -48,7 +48,7 @@
 // variables defined for stirLBM
 //#define NUM_DATA 250 // How many videos to export
 #define PROPERTY_PATH "property/properties_shrinked.csv" // path to material properties
-#define NUM_LOOPS 2 // How many loops of all materials to export
+#define NUM_LOOPS 10 // How many loops of all materials to export
 #define RPM_RANGE 360,780 // random range of rotor RPM
 #define VISC_RANGE 0, 1// dynamic viscosity range
 #define INFO "mimic_hotplate_" // should add _ underbar at the end
