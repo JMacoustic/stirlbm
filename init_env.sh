@@ -6,4 +6,4 @@ pyenv install 3.10.16
 pyenv global 3.10.16
 eval "$(pyenv init -)"
 pip install opencv-python
-pip install vessl 
+pip install vessl
