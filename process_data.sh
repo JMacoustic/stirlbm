@@ -20,16 +20,24 @@ mkdir -p "$customname/$customname"
 mv export/videos "$customname/$customname"
 mv export/parameters "$customname/$customname"
 
-video_dir="$customname/$customname/videos"
-parma_dir="$customname/$customname/parameters"
+
 
 echo "processing complete!"
 
 if [[ "$do_rename" == "y" || "$do_rename" == "Y" ]]; then
     # Renaming logic
-    start_old=1
     video_dir="$customname/$customname/videos"
     param_dir="$customname/$customname/parameters"
+    sample_file=$(find "$video_dir" -maxdepth 1 -name "*.mp4" | head -n 1)
+
+    if [[ -n "$sample_file" ]]; then
+        prefix=$(basename "$sample_file" | sed -E 's/[0-9]{4}\.mp4$//')
+    else
+        echo "Error: No sample video file found to detect prefix."
+        exit 1
+    fi
+    
+    start_old=1
 
     for ((i=end_old; i>=start_old; i--)); do
         old_name=$(printf "$video_dir/${prefix}%04d.mp4" $i)
