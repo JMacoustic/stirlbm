@@ -49,7 +49,7 @@ Material selectMaterial(const std::vector<Material>& materials, const std::strin
 
 using json = nlohmann::json;
 
-void exportConfig(const Material& material, const int& rpm, const std::string& option, const std::string& exportpath, const std::string& folder_str) {
+void exportConfig(const Material& material, const int& magnify, const int& rpm, const std::string& option, const std::string& exportpath, const std::string& folder_str) {
     /*
     * export options: json, txt, csv
     */
@@ -59,6 +59,7 @@ void exportConfig(const Material& material, const int& rpm, const std::string& o
         config["surface_tension"] = material.surface_tension;
         config["dynamic_viscosity"] = material.dynamic_viscosity;
         config["kinematic_viscosity"] = material.kinematic_viscosity;
+        config["magnification"] = magnify; 
         config["RPM"] = rpm;
 
         std::ofstream configuration(exportpath + "config_"+ folder_str + ".json");

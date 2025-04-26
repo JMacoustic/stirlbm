@@ -30,7 +30,7 @@
 
 #define GRAPHICS_FRAME_WIDTH 512 // set frame width if only GRAPHICS is enabled
 #define GRAPHICS_FRAME_HEIGHT 512 // set frame height if only GRAPHICS is enabled
-#define GRAPHICS_BACKGROUND_COLOR 0x000000 // set background color; black background (default) = 0x000000, white background = 0xFFFFFF
+#define GRAPHICS_BACKGROUND_COLOR 0xFFFFFF // set background color; black background (default) = 0x000000, white background = 0xFFFFFF
 #define GRAPHICS_U_MAX 0.18f // maximum velocity for velocity coloring in units of LBM lattice speed of sound (c=1/sqrt(3)) (default: 0.18f)
 #define GRAPHICS_RHO_DELTA 0.01f // coloring range for density rho will be [1.0f-GRAPHICS_RHO_DELTA, 1.0f+GRAPHICS_RHO_DELTA] (default: 0.01f)
 #define GRAPHICS_T_DELTA 1.0f // coloring range for temperature T will be [1.0f-GRAPHICS_T_DELTA, 1.0f+GRAPHICS_T_DELTA] (default: 1.0f)
@@ -38,29 +38,29 @@
 #define GRAPHICS_Q_CRITERION 0.0001f // Q-criterion value for Q-criterion isosurface visualization (default: 0.0001f)
 #define GRAPHICS_STREAMLINE_SPARSE 8 // set how many streamlines there are every x lattice points
 #define GRAPHICS_STREAMLINE_LENGTH 128 // set maximum length of streamlines
-#define GRAPHICS_RAYTRACING_TRANSMITTANCE 0.25f // transmitted light fraction in raytracing graphics ("0.25f" = 1/4 of light is transmitted and 3/4 is absorbed along longest box side length, "1.0f" = no absorption)
-#define GRAPHICS_RAYTRACING_COLOR 0x005F7F // absorption color of fluid in raytracing graphics
+#define GRAPHICS_RAYTRACING_TRANSMITTANCE 0.5f // transmitted light fraction in raytracing graphics ("0.25f" = 1/4 of light is transmitted and 3/4 is absorbed along longest box side length, "1.0f" = no absorption)
+#define GRAPHICS_RAYTRACING_COLOR 0x000000  //0x005F7F absorption color of fluid in raytracing graphics
 
-//#define GRAPHICS_TRANSPARENCY 0.7f // optional: comment/uncomment this line to disable/enable semi-transparent rendering (looks better but reduces framerate), number represents transparency (equal to 1-opacity) (default: 0.7f)
+//#define GRAPHICS_TRANSPARENCY 0.0f // optional: comment/uncomment this line to disable/enable semi-transparent rendering (looks better but reduces framerate), number represents transparency (equal to 1-opacity) (default: 0.7f)
 //#define RANDOM_TRANSPARENCY // optional: comment/uncomment this line to disable/enable random transparency
 
 // ############################################################################################################
 // variables defined for stirLBM
 //#define NUM_DATA 250 // How many videos to export
 #define PROPERTY_PATH "property/properties_shrinked.csv" // path to material properties
-#define NUM_LOOPS 5 // How many loops of all materials to export
-#define RPM_RANGE 6,13 // random range of rotor RPM
-#define TRANSPARENCY_RANGE 0, 1 // fluid transparency range
+#define NUM_LOOPS 2 // How many loops of all materials to export
+#define RPM_RANGE 360,780 // random range of rotor RPM
 #define VISC_RANGE 0, 1// dynamic viscosity range
-#define INFO "surfdensrpm_" // should add _ underbar at the end
+#define INFO "mimic_hotplate_" // should add _ underbar at the end
 #define NAMING_START 1 // start naming from 1
-#define MAGNIFY 100.0f // magnification factor for the viscosity
+#define MAGNIFY_RANGE 1, 1 // magnification factor for the viscosity
 #define CONFIG_OPTION "json" // config file export option. "json", "csv", "txt"
 #define START_CAPTURE 7000ull // when to start image export
 #define STOP_ROTOR 7000ull // when to stop rotor rotation
-#define STOP_CAPTURE 12000ull // when to stop image export
-#define FPS 3000u // simulation FPS
-#define GRID 128u // grid resolusion (one-side)
+#define STOP_CAPTURE 27000ull //12000ull when to stop image export
+#define FPS 4000u // simulation FPS
+#define GRID 100u // grid resolusion (one-side)
+#define STEPS 5ull // time steps 
 
 // choose stirring mode
 //#define STIR_MODE //stir forever

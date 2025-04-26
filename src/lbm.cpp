@@ -549,7 +549,7 @@ string LBM_Domain::Graphics::device_defines() const { return
 	"\n	#define def_attenuation "      +to_string(ln(clamp(GRAPHICS_RAYTRACING_TRANSMITTANCE, 1E-9f, 1.0f))/(float)max(max(lbm->get_Nx(), lbm->get_Ny()), lbm->get_Nz()))+"f" // (negative) attenuation parameter for raytracing graphics
 	"\n	#define def_absorption_color " +to_string(GRAPHICS_RAYTRACING_COLOR)+"" // absorption color of fluid for raytracing graphics
 
-	"\n	#define COLOR_S (127<<16|127<<8|127)" // (stationary or moving) solid boundary
+	"\n	#define COLOR_S (  0<<16|255<<8|  0)" // (127<<16|127<<8|127)" // (stationary or moving) solid boundary
 	"\n	#define COLOR_E (  0<<16|255<<8|  0)" // equilibrium boundary (inflow/outflow)
 	"\n	#define COLOR_M (255<<16|  0<<8|255)" // cells next to moving solid boundary
 	"\n	#define COLOR_T (255<<16|  0<<8|  0)" // temperature boundary
