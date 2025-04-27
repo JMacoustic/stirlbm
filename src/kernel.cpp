@@ -2458,7 +2458,7 @@ void atomic_add_f(volatile global float* addr, const float val) {
 	uxx j[8];
 	calculate_j8(xyz, j);
 	bool v[8];
-	for(uint i=0u; i<8u; i++) v[i] = (flags[j[i]]&TYPE_BO)==TYPE_S;
+	for(uint i=0u; i<8u; i++) v[i] = (flags[j[i]]&TYPE_BO)==TYPE_MS; ////////////////////////////////////////////////////
 	float3 triangles[15]; // maximum of 5 triangles with 3 vertices each
 	const uint tn = marching_cubes_halfway(v, triangles); // run marching cubes algorithm
 	if(tn==0u) return;

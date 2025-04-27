@@ -355,6 +355,7 @@ string LBM_Domain::device_defines() const { return
 	"\n	#define TYPE_G 0x20" // 0b00100000 // gas
 	"\n	#define TYPE_X 0x40" // 0b01000000 // reserved type X
 	"\n	#define TYPE_Y 0x80" // 0b10000000 // reserved type Y
+	"\n #define TYPE_TS 0x97" // // transparent solid
 
 	"\n	#define TYPE_MS 0x03" // 0b00000011 // cell next to moving solid boundary
 	"\n	#define TYPE_BO 0x03" // 0b00000011 // any flag bit used for boundaries (temperature excluded)

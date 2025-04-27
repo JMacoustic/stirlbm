@@ -53,7 +53,7 @@
 #define VISC_RANGE 0, 1// dynamic viscosity range
 #define INFO "mimic_hotplate_" // should add _ underbar at the end
 #define NAMING_START 1 // start naming from 1
-#define MAGNIFY_RANGE 1, 1 // magnification factor for the viscosity
+#define MAGNIFY_RANGE 1, 100 // magnification factor for the viscosity
 #define CONFIG_OPTION "json" // config file export option. "json", "csv", "txt"
 #define START_CAPTURE 7000ull // when to start image export
 #define STOP_ROTOR 7000ull // when to stop rotor rotation
@@ -80,6 +80,7 @@
 #define TYPE_G 0b00100000 // gas
 #define TYPE_X 0b01000000 // reserved type X
 #define TYPE_Y 0b10000000 // reserved type Y
+#define TYPE_TS (TYPE_S | TYPE_X) // solid + reserved type X
 
 #define VIS_FLAG_LATTICE  0b00000001 // lbm.graphics.visualization_modes = VIS_...|VIS_...|VIS_...;
 #define VIS_FLAG_SURFACE  0b00000010

@@ -76,6 +76,7 @@ void main_setup() { // without decay
 	std::cout << "Density: " << selected.density << " kg/m^3\n";
 	std::cout << "Surface Tension: " << selected.surface_tension << " N/m\n";
 	std::cout << "Dynamic Viscosity: " << selected.dynamic_viscosity << " cP\n";
+	std::cout << "Magnification: " << magnify, "\n";
 	std::cout << "Kinematic Viscosity: " << selected.kinematic_viscosity << " m^2/s\n";
 	std::cout << "RPM: " << rpm << " rad/min\n";
 
@@ -155,7 +156,7 @@ void main_setup() { // without decay
 #endif
 
 	// Initialize simulation
-	lbm.graphics.visualization_modes = VIS_PHI_RAYTRACE;
+	lbm.graphics.visualization_modes = VIS_FLAG_SURFACE | VIS_PHI_RAYTRACE;
 	lbm.run(0u, lbm_stop);
 
 	// simulation loop
