@@ -47,27 +47,27 @@
 // ############################################################################################################
 // variables defined for stirLBM
 //#define NUM_DATA 250 // How many videos to export
-#define PROPERTY_PATH "property/properties_shrinked.csv" // path to material properties
+#define PROPERTY_PATH "property/waterglycerindenseproperties.csv" // path to material properties
 #define NUM_LOOPS 2 // How many loops of all materials to export
-#define RPM_RANGE 360,780 // random range of rotor RPM
+#define RPM_RANGE 325,550 // random range of rotor RPM
 #define VISC_RANGE 0, 1// dynamic viscosity range
-#define INFO "mimic_hotplate_" // should add _ underbar at the end
+#define INFO "mimic_impeller_" // should add _ underbar at the end
 #define NAMING_START 1 // start naming from 1
-#define MAGNIFY_RANGE 1, 1 // magnification factor for the viscosity
+#define MAGNIFY_RANGE 1, 1// magnification factor for the viscosity
 #define CONFIG_OPTION "json" // config file export option. "json", "csv", "txt"
 #define START_CAPTURE 7000ull // when to start image export
 #define STOP_ROTOR 7000ull // when to stop rotor rotation
-#define STOP_CAPTURE 27000ull //12000ull when to stop image export
+#define STOP_CAPTURE 23000ull //12000ull when to stop image export
 #define FPS 4000u // simulation FPS
-#define GRID 100u // grid resolusion (one-side)
-#define STEPS 5ull // time steps 
+#define GRID 250u // grid resolusion (one-side)
+#define STEPS 10ull // time steps 
 
 // choose stirring mode
 //#define STIR_MODE //stir forever
 #define DECAY_MODE // stop stirring at some point
 
 // export options
-#define OUTPUT_TIME 5.0f
+#define OUTPUT_TIME 4.0f
 #define OUTPUT_FPS 10u
 
 // #############################################################################################################

@@ -80,8 +80,8 @@ void main_setup() { // without decay
 	std::cout << "RPM: " << rpm << " rad/min\n";
 
 	// si values
-	const float si_box = 0.05f;
-	const float fan_ratio = 0.6f;
+	const float si_box = 0.13f;
+	const float fan_ratio = 0.4f;
 	const float si_omega = rpm  * 2.0f * 3.14f / 60.0f;
 	const float si_radius = si_box * fan_ratio / 2.0f; // rotor size
 	const float si_u = si_radius * si_omega;
@@ -112,16 +112,16 @@ void main_setup() { // without decay
 	const float lbm_f = units.f(si_rho, si_g);
 	const float lbm_omega = units.omega(si_omega), lbm_domega = lbm_omega * lbm_dt;
 	LBM lbm(lbm_grid, lbm_nu, 0.0f, 0.0f, -lbm_f, lbm_sigma);
-	const float3 center = float3(lbm.center().x, lbm.center().y, 0.7f * lbm_radius);
+	const float3 center = float3(lbm.center().x, lbm.center().y,  0.7f*lbm_radius);
 
 	// ###################################################################################### define geometry ######################################################################################
-	Mesh* mesh = read_stl(get_exe_path() + "../stl/magnet_stir.stl", lbm.size(), center, 2.0f * lbm_radius);
+	Mesh* mesh = read_stl(get_exe_path() + "../stl/impeller.stl", lbm.size(), center, 2.0f * lbm_radius);
 	const uint Nx = lbm.get_Nx(), Ny = lbm.get_Ny(), Nz = lbm.get_Nz();
 
 	parallel_for(lbm.get_N(), [&](ulong n) {
 		uint x = 0u, y = 0u, z = 0u;
 		lbm.coordinates(n, x, y, z);
-		int h = (Nz / 3u);
+		int h = (Nz / 4u);
 
 		if (z < h) {
 			lbm.flags[n] = TYPE_F;
@@ -179,7 +179,7 @@ void main_setup() { // without decay
 		exportConfig(selected, magnify, rpm, CONFIG_OPTION, config_path, folder_str);
 
 		if (lbm.graphics.next_frame(lbm_stop-lbm_init, OUTPUT_TIME, OUTPUT_FPS) && lbm_init < lbm.get_t() && lbm.get_t() < lbm_stop) {
-			lbm.graphics.set_camera_free(float3(0.0f * (float)Nx, 0.0f * (float)Ny, 0.3f * (float)Nz), 0.0f, 90.0f, 80.0f);
+			lbm.graphics.set_camera_free(float3(0.22f * (float)Nx, 0.0f * (float)Ny, 0.03f * (float)Nz), 0.0f, 90.0f, 80.0f);
 			lbm.graphics.write_frame(image_path);
 		}
 #endif // GRAPHICS && !INTERACTIVE_GRAPHICS
