@@ -47,17 +47,17 @@
 // ############################################################################################################
 // variables defined for stirLBM
 //#define NUM_DATA 250 // How many videos to export
-#define PROPERTY_PATH "property/waterglycerindenseproperties.csv" // path to material properties
-#define NUM_LOOPS 2 // How many loops of all materials to export
-#define RPM_RANGE 325,550 // random range of rotor RPM
+#define PROPERTY_PATH "property/properties_temp.csv" // path to material properties
+#define NUM_LOOPS 1 // How many loops of all materials to export
+#define RPM_RANGE 550,550 // random range of rotor RPM
 #define VISC_RANGE 0, 1// dynamic viscosity range
 #define INFO "mimic_impeller_" // should add _ underbar at the end
 #define NAMING_START 1 // start naming from 1
 #define MAGNIFY_RANGE 1, 1// magnification factor for the viscosity
 #define CONFIG_OPTION "json" // config file export option. "json", "csv", "txt"
 #define START_CAPTURE 7000ull // when to start image export
-#define STOP_ROTOR 7000ull // when to stop rotor rotation
-#define STOP_CAPTURE 23000ull //12000ull when to stop image export
+#define STOP_ROTOR 10000ull // when to stop rotor rotation
+#define STOP_CAPTURE 20000ull //12000ull when to stop image export
 #define FPS 4000u // simulation FPS
 #define GRID 250u // grid resolusion (one-side)
 #define STEPS 10ull // time steps 
